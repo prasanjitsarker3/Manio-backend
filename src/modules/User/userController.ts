@@ -52,10 +52,34 @@ const resetPassword = catchAsync(async (req, res) => {
   });
 });
 
+const getMe = catchAsync(async (req, res) => {
+  const token = req.headers.authorization;
+  const result = await authService.getMe(token);
+  res.send(result);
+});
+
+const roleToggle = catchAsync(async (req, res) => {
+  const { email } = req.query;
+  if (!email || typeof email !== "string") {
+    return res
+      .status(400)
+      .json({ success: false, message: "Email is required." });
+  }
+  const result = await authService.roleChangeInDB(email);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Role changed successfully.",
+    data: result,
+  });
+});
+
 export const authControllers = {
   register,
   login,
   changePassword,
   forgetPassword,
   resetPassword,
+  getMe,
+  roleToggle,
 };

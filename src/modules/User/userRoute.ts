@@ -35,4 +35,6 @@ router.post(
   authControllers.resetPassword
 );
 
+router.get("/me", auth(USER_ROLE.admin, USER_ROLE.user), authControllers.getMe);
+router.post("/role", authControllers.roleToggle);
 export const userRoutes = router;

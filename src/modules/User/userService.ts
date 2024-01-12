@@ -143,10 +143,33 @@ const resetPassword = async (
   return null;
 };
 
+const getMe = async (token: any) => {
+  const decoded = jwt.verify(token, config.accessToken as string) as JwtPayload;
+  const { email, role } = decoded;
+  // return { email, role };
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new AppError(404, "User Not Found!");
+  }
+  return { email: user.email, role: user.role };
+};
+
+const roleChangeInDB = async (email: string) => {
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new Error("User not found.");
+  }
+  user.role = user.role === "user" ? "admin" : "user";
+  await user.save();
+  return user;
+};
+
 export const authService = {
   registerUser,
   loginUser,
   changePassword,
   userForgetPassword,
   resetPassword,
+  getMe,
+  roleChangeInDB,
 };

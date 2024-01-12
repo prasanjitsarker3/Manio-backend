@@ -29,7 +29,7 @@ const productSchema = new Schema<TProduct>(
     discount: {
       type: Number,
     },
-    image: { type: String },
+    image: { type: [String] },
     discountPrice: {
       type: Number,
       default: null,

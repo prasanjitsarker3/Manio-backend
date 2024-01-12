@@ -2,8 +2,25 @@ import catchAsync from "../../utlisFunction/catchAsync";
 import sendResponse from "../../utlisFunction/sendResponse";
 import { productService } from "./productService";
 
+// const createProduct = catchAsync(async (req, res) => {
+//   console.log(req.file);
+//   const result = await productService.createProductIntoDB(req.file, req.body);
+//   sendResponse(res, {
+//     statusCode: 200,
+//     success: true,
+//     message: "Product is created successfully",
+//     data: result,
+//   });
+// });
+
 const createProduct = catchAsync(async (req, res) => {
-  const result = await productService.createProductIntoDB(req.file, req.body);
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).json({
+      success: false,
+      message: "No files were uploaded.",
+    });
+  }
+  const result = await productService.createProductIntoDB(req.files, req.body);
   sendResponse(res, {
     statusCode: 200,
     success: true,

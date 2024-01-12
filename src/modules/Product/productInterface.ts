@@ -7,7 +7,7 @@ export type TProduct = {
   stock: number;
   details: string;
   discount?: number;
-  image?: string;
+  image?: string[];
   discountPrice?: number;
   isDeleted?: boolean;
 };

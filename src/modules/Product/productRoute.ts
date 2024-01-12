@@ -5,7 +5,7 @@ import { upload } from "../../utlisFunction/sendImageToCouldinary";
 const router = express.Router();
 router.post(
   "/create-product",
-  upload.single("file"),
+  upload.array("file"),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = JSON.parse(req.body.data);
     next();
