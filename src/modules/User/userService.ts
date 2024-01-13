@@ -146,7 +146,6 @@ const resetPassword = async (
 const getMe = async (token: any) => {
   const decoded = jwt.verify(token, config.accessToken as string) as JwtPayload;
   const { email, role } = decoded;
-  // return { email, role };
   const user = await User.findOne({ email });
   if (!user) {
     throw new AppError(404, "User Not Found!");

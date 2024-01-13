@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 
-type Product = {
-  product: Types.ObjectId;
+export type TProduct = {
+  productId: Types.ObjectId;
   size: string;
   quantity: number;
   color: string;
@@ -9,7 +9,8 @@ type Product = {
 
 export type TOrder = {
   email: string;
-  product: Product[];
+  product: TProduct[];
   name: string;
   phone: string;
+  totalPrice?: number;
 };
