@@ -3,7 +3,6 @@ import sendResponse from "../../utlisFunction/sendResponse";
 import { orderProductService } from "./orderProductService";
 
 const createOrderUser = catchAsync(async (req, res) => {
-  console.log(req.body);
   const result = await orderProductService.createOrderIntoDB(req.body);
   sendResponse(res, {
     statusCode: 201,
@@ -38,8 +37,32 @@ const singleUserOrder = catchAsync(async (req, res) => {
   });
 });
 
+const deleteUserOrder = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await orderProductService.deleteSingleProductInDB(id);
+  sendResponse(res, {
+    statusCode: 201,
+    success: true,
+    message: "Sing order delete successfully",
+    data: result,
+  });
+});
+
+const statusToggle = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await orderProductService.statusToggleFromDB(id);
+  sendResponse(res, {
+    statusCode: 201,
+    success: true,
+    message: "Status toggle successfully",
+    data: result,
+  });
+});
+
 export const orderController = {
   createOrderUser,
   getAllOrder,
   singleUserOrder,
+  deleteUserOrder,
+  statusToggle,
 };

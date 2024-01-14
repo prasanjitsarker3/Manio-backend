@@ -39,8 +39,29 @@ const singleOrderFormDB = async (email: string) => {
   return result;
 };
 
+const deleteSingleProductInDB = async (id: string) => {
+  const result = await Order.findByIdAndDelete(id);
+  return result;
+};
+
+const statusToggleFromDB = async (id: string) => {
+  const order = await Order.findById(id);
+  if (!order) {
+    throw new Error("Order not found.");
+  }
+  if (order.status === "checkoutProcess") {
+    order.status = "orderConfirm";
+  } else if (order.status === "orderConfirm") {
+    order.status = "deliveryProcess";
+  }
+  await order.save();
+  return order;
+};
+
 export const orderProductService = {
   createOrderIntoDB,
   getAllOrder,
   singleOrderFormDB,
+  deleteSingleProductInDB,
+  statusToggleFromDB,
 };

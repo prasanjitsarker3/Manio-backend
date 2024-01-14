@@ -10,7 +10,11 @@ export type TProduct = {
 export type TOrder = {
   email: string;
   product: TProduct[];
+  status?: "checkoutProcess" | "orderConfirm" | "deliveryProcess";
   name: string;
   phone: string;
   totalPrice?: number;
+  location?: string;
+  orderDate?: string;
+  paymentMethod?: "cash" | "online";
 };
